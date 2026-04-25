@@ -49,4 +49,73 @@ Supports:
 Uses **Ollama**
 
 ```bash
+
+⚙️ FULL INSTALLATION GUIDE
+🪟 Windows Installation
+1️⃣ Install Python
+
+Download Python 3.10+
+
+https://www.python.org/downloads/
+
+During install check:
+
+Add Python to PATH
+2️⃣ Install Git
+
+Download:
+
+https://git-scm.com/downloads
+
+3️⃣ Install Nmap
+
+Download:
+
+https://nmap.org/download.html
+
+4️⃣ Clone Project
+git clone https://github.com/YOURUSERNAME/kali-soc-ai.git
+cd kali-soc-ai
+5️⃣ Create Virtual Environment
+python -m venv .venv
+
+Activate:
+
+.venv\Scripts\activate
+6️⃣ Install Requirements
+pip install -r requirements.txt
+7️⃣ Optional AI Install (FREE)
+
+Install Ollama:
+
+https://ollama.com/download
+
+Then run:
+
 ollama run llama3
+8️⃣ Run Program
+python main.py
+🐧 Kali Linux Installation
+1️⃣ Update System
+sudo apt update && sudo apt upgrade -y
+2️⃣ Install Dependencies
+sudo apt install python3 python3-pip python3-venv git nmap -y
+3️⃣ Clone Repo
+git clone https://github.com/YOURUSERNAME/kali-soc-ai.git
+cd kali-soc-ai
+4️⃣ Create Virtual Environment
+python3 -m venv .venv
+
+Activate:
+
+source .venv/bin/activate
+5️⃣ Install Python Packages
+pip install -r requirements.txt
+6️⃣ Install Ollama (FREE AI)
+curl -fsSL https://ollama.com/install.sh | sh
+
+Then run:
+
+ollama run llama3
+7️⃣ Run Project
+python3 main.py
