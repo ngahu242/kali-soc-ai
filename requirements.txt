@@ -2,3 +2,17 @@ openai
 requests
 rich
 python-dotenv
+psutil
+SpeechRecognition
+groq
+pandas
+sounddevice
+soundfile
+fpdf
+scapy
+python-nmap
+colorama
+tqdm
+tabulate
+PyAudio
+vosk

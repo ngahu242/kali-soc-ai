@@ -1,0 +1,285 @@
+[2026-04-28T19:05:27.819936] [INFO] SOC AI Autonomous Mode STARTED
+[2026-04-28T19:05:30.829477] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:05:43.817959] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:05:56.771879] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:06:09.798392] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:09:52.079723] [INFO] AUTONOMOUS MODE STARTED
+[2026-04-28T19:09:55.130043] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:19:33.846681] [INFO] AUTONOMOUS MODE STARTED
+[2026-04-28T19:19:37.119711] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:19:45.190193] [INFO] Decision Engine Output: Ollama offline.
+[2026-04-28T19:19:47.421142] [WARNING] AUTONOMOUS MODE STOPPED BY USER (CTRL + C)
+[2026-04-29T18:01:11.553073] [INFO] AUTONOMOUS MODE STARTED
+[2026-04-29T18:04:17.181458] [INFO] Decision Engine Output: **System Issue Analysis**
+
+Based on the provided issue report, the system is currently reporting 'OK' for all relevant components. 
+
+However, it's worth noting that the absence of errors does not necessarily guarantee correct behavior. It is possible for systems to be in an unknown or undesired state that is not covered by the 'OK' status.
+
+**Severity:**
+Given that all components appear to be functioning as expected, I would classify the severity of this issue as **Low**.
+
+**Auto-Fix Safety:**
+Since there is no clear issue at present, and all components are reporting 'OK', I would categorize the auto-fix as **No**, as attempting to apply an auto-fix may potentially introduce an unforeseen issue.
+
+**Recommended Action:**
+I recommend continuing to monitor the system for any changes in the status of the components, as it is possible that an unexpected issue could arise at any time.
+
+**Escalation:**
+There is no need to escalate this issue to a human analyst at this time, as the system is operating as expected.
+
+**Additional Recommendation:**
+Consider implementing a system-level health check or alert to notify analysts if any components report a non-'OK' status, to facilitate quicker detection and response to potential issues.
+[2026-05-01T18:05:47.860552] [INFO] AUTONOMOUS MODE STARTED
+[2026-05-01T18:07:20.519508] [INFO] Decision Engine Output: Based on the system issue report, I analyze and report my findings as follows:
+
+1. Severity: **Low**
+The report indicates that all AI components are functioning normally (ai.brain, ai.soc_engine, ai.threat_detector, ai.system_audit). This suggests a routine system check rather than an actual critical issue.
+
+2. Auto-fix safe?: **Yes**
+Given the normal functioning of all AI components, there is no indication of any malicious or high-risk activity that would require human intervention. An auto-fix at this level would be safe and effective in maintaining system integrity.
+
+3. Recommended action: **Run scheduled maintenance tasks to ensure optimal performance** The report suggests a routine check rather than an actual critical issue. Running scheduled maintenance tasks will help maintain the system's overall performance and efficiency.
+
+4. Escalate to human analyst?: **No**
+Given the low severity of the issue and the normal functioning of all AI components, there is no need to escalate this matter to a human analyst at this time. The system appears to be operating within expected parameters.
+[2026-05-01T18:08:32.566986] [INFO] Decision Engine Output: Based on the system issue report, I analyze the following:
+
+1. Severity: Low
+The issue appears to be related to the AI components (brain, SOC engine, threat detector, and system audit), which are all reporting "OK". This suggests that there is no immediate or critical concern with the system.
+2. Is auto-fix safe? No
+Since the issue is not severe enough to warrant an immediate fix, I do not recommend attempting an automated fix at this time.
+3. Recommended action:
+ Run a manual review of the AI components and their configurations to ensure they are functioning as expected. This may involve reviewing logs or running diagnostic tests.
+4. Should escalate to human analyst? No
+Based on the information provided, there is no indication that a human analyst needs to be involved at this time. However, if the issue persists after manual review, it would be reasonable to escalate it for further investigation.
+
+Recommendation: Perform a manual review of the AI components and their configurations to ensure they are functioning as expected.
+[2026-05-01T18:09:13.595968] [INFO] Decision Engine Output: Based on the issue report, I analyze the following:
+
+1. Severity: Low
+The system audit and threat detector are both indicating that everything is OK, which suggests that there are no critical issues or potential security threats.
+
+2. Auto-fix safety: No
+Since there are no issues detected, an auto-fix would not be applicable in this case.
+
+3. Recommended action:
+None required. The system appears to be functioning normally with no signs of issues or threats.
+
+4. Escalation to human analyst?:
+No escalation is necessary at this time.
+[2026-05-01T18:10:18.638124] [INFO] Decision Engine Output: Based on the issue report, I've analyzed the situation and provide my findings:
+
+1. Severity: **Low**
+The system components (AI brain, SOC engine, threat detector, and system audit) are all reporting "OK", indicating that there are no critical or high-level issues with the system's functionality.
+2. Is auto-fix safe? **Yes**
+Given the lack of any critical or high-level issues, an auto-fix is unlikely to cause any harm or introduce new problems. The system is stable and functioning correctly.
+3. Recommended action: **No action required**
+The issue report suggests that there are no pressing concerns with the system's performance or security. No further investigation or intervention is necessary at this time.
+4. Should escalate to human analyst? **No**
+Given the low severity and stability of the system, I do not recommend escalating this issue to a human analyst. The AI-assisted SOC can continue to monitor the system without any concerns.
+[2026-05-01T18:11:47.697467] [INFO] Decision Engine Output: Based on the issue report, I've analyzed the system and arrived at the following conclusions:
+
+1. Severity: Low
+The report indicates that all AI-related components (brain, SOC engine, threat detector, and system audit) are functioning correctly. This suggests a minor issue that is easily detectable and does not pose a significant risk to the system.
+2. Auto-fix safe? No
+Since the issue appears minor, I recommend against auto-fixing. The system should be investigated further to determine the root cause of the reported 'OK' status for all AI components.
+3. Recommended action:
+Perform a thorough audit of the system's logs and configuration files to identify any potential misconfigurations or anomalies that may have contributed to the reported 'OK' status for all AI components. This will help ensure that the system is functioning as intended and not missing any critical security or performance issues.
+4. Should escalate to human analyst? No
+Based on my analysis, I do not recommend escalating this issue to a human analyst at this time. The issue appears minor, and further investigation can be performed by the AI components themselves without human intervention. However, if the root cause of the issue is determined to be more significant than initially thought, it may be necessary to escalate the issue to a human analyst for further review and decision-making.
+[2026-05-01T18:24:34.727152] [INFO] Autonomous Decision Engine executed
+[2026-05-01T18:24:34.728906] [INFO] Decision: After analyzing the system issue, I've generated a report with my findings:
+
+1. **Severity:** Low
+The system is reporting that all AI components (brain, SOC engine, threat detector, and system audit) are functioning correctly, indicating no critical issues or threats detected.
+2. **Auto-fix safe?:** Yes
+Given the positive status of all AI components, an auto-fix would likely not introduce any new issues or compromise system security.
+3. **Recommended action:**
+Run a regular system maintenance cycle to ensure all components remain up-to-date and functioning optimally.
+
+4. **Should escalate to human analyst?:** No
+Based on my analysis, this issue does not require human intervention as it is purely a confirmation of normal system operation.
+[2026-05-01T18:24:34.730832] [INFO] Auto-heal cycle completed
+[2026-05-01T18:48:05.160141] [INFO] Autonomous Decision Engine executed
+[2026-05-01T18:48:05.161575] [INFO] Decision: Based on the issue report, I analyze the system and provide my findings:
+
+1. Severity: Low
+The system is reporting no issues or anomalies in AI-related components, which suggests a stable environment.
+2. Auto-fix safe? No
+Since there are no issues reported, an auto-fix would not be necessary.
+3. Recommended action:
+Perform regular system checks to ensure the stability of the AI-related components and review any logs or audit trails for potential security vulnerabilities.
+4. Should escalate to human analyst? No
+The system appears to be functioning normally, and a human analyst may not be needed at this time.
+[2026-05-01T18:48:05.162831] [INFO] Auto-heal cycle completed
+[2026-05-01T18:48:22.032061] [INFO] Auto-heal already executed. Skipping repeat cycle.
+[2026-05-01T18:48:24.769483] [INFO] Auto-heal already executed. Skipping repeat cycle.
+[2026-05-01T18:49:36.699478] [INFO] Autonomous Decision Engine executed
+[2026-05-01T18:49:36.700407] [INFO] Decision: A straightforward issue report!
+
+After analyzing the system issue, I conclude:
+
+1. **Severity**: Low
+The issue reports all AI components as "OK", indicating that there are no known security threats or anomalies detected by the autonomous decision engine.
+2. **Auto-fix safe?**: Yes
+Since the issue is not related to a critical security threat, an auto-fix would be safe and effective in resolving any potential minor issues.
+3. **Recommended action**: Auto-fix the issue using our automated systems, as it poses no significant risk to system stability or security.
+4. **Escalate to human analyst?**: No
+Given the low severity of the issue and the positive status of all AI components, there is no need to escalate this issue to a human analyst.
+
+The autonomous decision engine will safely auto-fix the issue without requiring human intervention.
+[2026-05-01T18:49:36.701349] [INFO] Auto-heal cycle completed
+[2026-05-01T18:51:53.200222] [INFO] Autonomous Decision Engine executed
+[2026-05-01T18:51:53.201734] [INFO] Decision: After analyzing the issue report, I've determined the following:
+
+1. Severity: **Low**
+The system components are all reporting "OK" status, indicating that there are no critical issues or anomalies detected.
+2. Is auto-fix safe? **Yes**
+Since all system components are functioning correctly, an auto-fix would not introduce any new vulnerabilities or impact system performance.
+3. Recommended action:
+No specific action is required at this time. The system is operating within normal parameters, and no further investigation or intervention is necessary.
+4. Should escalate to human analyst? **No**
+Given the "OK" status of all system components, there is no need for a human analyst to intervene or take any additional actions. The system is functioning as expected, and monitoring can continue as usual.
+[2026-05-01T18:51:53.203373] [INFO] Auto-heal cycle completed
+[2026-05-01T18:54:55.309018] [INFO] Autonomous Decision Engine executed
+[2026-05-01T18:54:55.311091] [INFO] Decision: Based on the issue report, I analyze the system as follows:
+
+1. Severity: Low
+The system seems to be functioning normally with all components reporting OK. There are no indications of any critical issues or potential security threats.
+2. Auto-fix safe? No
+There is no need for an auto-fix in this case since there are no reported issues that require correction.
+3. Recommended action: Monitor the system regularly to ensure everything remains stable and perform routine maintenance as needed.
+4. Should escalate to human analyst? No
+The situation does not warrant escalation to a human analyst, as all systems appear to be functioning correctly.
+[2026-05-01T18:54:55.313578] [INFO] Auto-heal cycle completed
+[2026-05-01T19:01:23.146778] [INFO] Autonomous Decision Engine executed
+[2026-05-01T19:01:23.148580] [INFO] Decision: Based on the issue report, I analyze the following:
+
+**Severity:** Low
+The system components (AI brain, SOC engine, threat detector, and system audit) are all reporting OK, indicating that there are no critical or high-impact issues present.
+
+**Auto-fix safety:** No
+While the system components are functioning correctly, auto-fixing would require more information about the underlying systems and configurations to ensure safe and effective fixes. Without this context, I cannot recommend auto-fixing at this time.
+
+**Recommended action:**
+Run a comprehensive system audit (ai.system_audit) to gather more information about the system configuration, dependencies, and potential vulnerabilities. This will provide a clearer picture of any potential issues that may require attention.
+
+**Escalation to human analyst:** No
+Based on the current issue report, I do not believe it is necessary to escalate this issue to a human analyst at this time. However, if the system audit reveals significant concerns or unknowns, it would be prudent to consult with a human analyst for further guidance and decision-making.
+[2026-05-01T19:01:23.149986] [INFO] Auto-heal cycle completed
+[2026-05-01T19:07:01.985029] [INFO] Auto-heal already executed. Skipping repeat cycle.
+[2026-05-01T19:36:42.690077] [INFO] Autonomous Decision Engine executed
+[2026-05-01T19:36:42.694458] [INFO] Decision: Based on the issue report, I analyze the system as follows:
+
+**Severity:** Low
+The system seems to be functioning normally across various components (AI brain, SOC engine, threat detector, and system audit). There are no critical issues or potential threats detected.
+
+**Auto-fix safety:** Yes
+Given the normal functioning of all components, there is no need for an auto-fix. The system is stable and secure.
+
+**Recommended action:**
+No specific action is required at this time. Monitoring the system to ensure continued normal operation is sufficient.
+
+**Escalation to human analyst:** No
+The issue report indicates that the system is functioning within normal parameters, and there is no need for human intervention or escalation.
+[2026-05-01T19:36:42.696177] [INFO] Auto-heal cycle completed
+[2026-05-01T19:41:08.510611] [INFO] Autonomous Decision Engine executed
+[2026-05-01T19:41:08.512656] [INFO] Decision: Based on the issue report, I analyze and provide the following findings:
+
+**Severity:** Low
+The system audit and threat detector reports are all OK, indicating that there are no critical security threats or vulnerabilities detected. The low severity suggests a minor issue that can be addressed without causing significant disruption.
+
+**Auto-fix safety:** Yes
+Given the positive reports from AI-powered modules, it's likely that an auto-fix would not introduce any new issues or compromise system stability.
+
+**Recommended action:** Run a routine system maintenance task to ensure all components are functioning optimally. This may include updating software, running disk checks, or performing minor configuration adjustments.
+
+**Escalate to human analyst?**: No
+Given the low severity and absence of critical security threats, it's not necessary to escalate this issue to a human analyst. The AI-powered modules have already done their job in detecting potential issues, and the system appears to be functioning normally.
+[2026-05-01T19:41:08.514688] [INFO] Auto-heal cycle completed
+[2026-05-01T19:45:11.763564] [INFO] Autonomous Decision Engine executed
+[2026-05-01T19:45:11.764783] [INFO] Decision: Based on the system issue report, I analyzed the situation and arrived at the following conclusions:
+
+1. Severity: **Low**
+The report indicates that all AI components (brain, SOC engine, threat detector, and system audit) are functioning properly, which suggests a stable and secure system environment.
+2. Auto-fix safety: **Yes**
+Given the positive status of the AI components, I conclude that an auto-fix would be safe to apply without compromising the system's integrity or security.
+3. Recommended action:
+No immediate action is required. The system appears to be functioning within normal parameters, and the AI components are performing their intended roles.
+4. Escalation to human analyst: **No**
+Given the low severity of the issue and the fact that all AI components are functioning properly, I do not recommend escalating this issue to a human analyst.
+[2026-05-01T19:45:11.765836] [INFO] Auto-heal cycle completed
+[2026-05-01T19:45:54.538944] [INFO] Auto-heal already executed. Skipping repeat cycle.
+[2026-05-01T19:59:57.670284] [INFO] Autonomous Decision Engine executed
+[2026-05-01T19:59:57.672307] [INFO] Decision: Based on the issue report, I analyze the system as follows:
+
+**Severity:** Low
+The system audit and threat detector are both indicating "OK", which suggests that there are no significant security threats or anomalies detected. The overall system health appears to be normal.
+
+**Auto-fix safety:** No
+While there may not be a critical issue, it's still important for human analysts to review the system and ensure that all components are functioning as expected before taking any automated actions.
+
+**Recommended action:**
+Run a deeper analysis on the ai.system_audit component to identify any potential areas of improvement or optimization. This could help improve system performance or resource utilization.
+
+**Escalation to human analyst:** No
+The issue does not appear to be critical, and auto-fix is not recommended due to the possibility of unintended consequences. However, it's still important for a human analyst to review the system and ensure that all components are functioning as expected.
+[2026-05-01T19:59:57.674327] [INFO] Auto-heal cycle completed
+[2026-05-01T20:22:22.482368] [INFO] Autonomous Decision Engine executed
+[2026-05-01T20:22:22.484212] [INFO] Decision: Based on the issue report, I analyze the system as follows:
+
+1. Severity: Low
+The report indicates that all AI components (brain, SOC engine, threat detector, and system audit) are functioning correctly, which suggests a stable and secure system.
+
+2. Auto-fix safety: Yes
+Given the healthy status of all AI components, an auto-fix would likely not introduce any new risks or instability to the system.
+
+3. Recommended action:
+No immediate action is required. The system appears to be functioning within normal parameters.
+
+4. Escalation to human analyst? No
+There are no signs of potential issues or anomalies that would warrant escalation to a human analyst at this time. The system's overall health and security suggest a stable operating environment.
+[2026-05-01T20:22:22.485946] [INFO] Auto-heal cycle completed
+[2026-05-01T20:25:19.123622] [INFO] Autonomous Decision Engine executed
+[2026-05-01T20:25:19.126793] [INFO] Decision: Based on the provided issue report, I analyze the system as follows:
+
+**Severity:** Low
+The system audit and threat detector are functioning normally, indicating that there is no evidence of significant security threats or vulnerabilities. The ai.brain, soc_engine, and system_audit components are also reporting normal status.
+
+**Auto-fix safety:** Yes
+Given the normal status of all components, an auto-fix would likely be safe as it would not introduce any new vulnerabilities or compromise system stability.
+
+**Recommended action:** None required at this time.
+The system is functioning normally, and no critical issues have been identified. No intervention is necessary to maintain system integrity.
+
+**Escalation to human analyst:** No
+Since the severity level is low and there are no significant security concerns, escalation to a human analyst is not warranted in this case.
+[2026-05-01T20:25:19.128687] [INFO] Auto-heal cycle completed
+[2026-05-01T20:40:56.518142] [INFO] Autonomous Decision Engine executed
+[2026-05-01T20:40:56.520320] [INFO] Decision: Based on the issue report, I've analyzed the system and rendered my verdict:
+
+1. Severity: Low
+The report indicates that all AI-related components (brain, SOC engine, threat detector, and system audit) are functioning normally. This suggests a minor issue or a misreport, rather than a critical one.
+2. Auto-fix safety: No
+There's no indication of an exploitable vulnerability or a critical failure that would warrant an auto-fix. The report suggests that the AI components are operating within normal parameters.
+3. Recommended action:
+Verify the system to ensure there aren't any underlying issues causing the misreport. This might involve running additional diagnostic tests or checking for configuration errors.
+4. Escalate to human analyst? No
+Given the low severity and the fact that all AI-related components are functioning normally, this issue can be safely handled by an automated decision engine like myself. There's no need to escalate it to a human analyst at this time.
+
+However, I would recommend keeping a close eye on the system to ensure that any potential issues don't escalate in severity.
+[2026-05-01T20:40:56.522482] [INFO] Auto-heal cycle completed
+[2026-05-01T21:58:26.332102] [INFO] Autonomous Decision Engine executed
+[2026-05-01T21:58:26.335793] [INFO] Decision: Based on the issue report, I've analyzed the system and here are my findings:
+
+1. Severity: Low
+The report indicates that all critical AI modules (brain, SOC engine, threat detector, and system audit) are functioning normally. This suggests that the overall system is stable and there are no critical security or performance issues.
+2. Auto-fix: No
+Since the issue doesn't affect any critical components, an auto-fix might not be necessary, and it's best to avoid automated fixes unless absolutely required.
+3. Recommended action:
+As the system is functioning normally, I recommend running a routine maintenance task (e.g., disk cleanup, log rotation) to ensure the system remains stable and performs optimally.
+
+4. Escalate to human analyst: No
+Based on my analysis, this issue does not require human intervention or escalation. The system is functioning as expected, and no critical issues have been detected. However, I will continue to monitor the system's performance and alert a human analyst if any new or unusual activity arises.
+[2026-05-01T21:58:26.337019] [INFO] Auto-heal cycle completed

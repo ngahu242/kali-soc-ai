@@ -1,12 +1,13 @@
 def is_safe(command):
+
     blocked = [
         "rm -rf",
+        "mkfs",
         "shutdown",
         "reboot",
-        "mkfs",
+        "poweroff",
         "dd if=",
-        "format",
-        "del /f"
+        ":(){:|:&};:"
     ]
 
     for item in blocked:
