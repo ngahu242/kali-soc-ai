@@ -60,8 +60,10 @@ CURRENT_CONTEXT = {
     "mode": "IDLE",
     "title": "",
     "data": "",
-    "last_action": ""
+    "last_action": "",
+    "flow_lock": False   #
 }
+
 
 SYSTEM_ACTIVE = True
 FLOW_ENABLED = True
@@ -69,25 +71,6 @@ FLOW_ENABLED = True
 # ==========================================================
 # SOC WORKFLOW ENGINE
 # ==========================================================
-def next_flow():
-    console.print(
-        Panel.fit(
-            """
-[bold cyan]NEXT ACTIONS[/bold cyan]
-
-1. Continue investigation
-2. Run related module
-3. Generate report
-""",
-            border_style="cyan",
-            title="SOC WORKFLOW"
-        )
-    )
-
-    return Prompt.ask(
-        "Choose next step",
-        choices=["1", "2", "3"],
-    )
 def related_module_selector():
     console.print(
         Panel.fit(
@@ -406,10 +389,8 @@ def render_output(title, data):
     )
 
     # ======================================================
-    # FLOW GATE
+    # FLOW CONTROL (FIXED - NON-INTERFERING NETFLOW SAFE)
     # ======================================================
-    if not FLOW_ENABLED:
-        return
 
     analysis_modules = {
         "SYSTEM AUDIT",
@@ -426,62 +407,69 @@ def render_output(title, data):
         "AUTONOMOUS MODE"
     }
 
-    if title not in analysis_modules:
-        return
+    # ONLY SHOW OPTIONS AFTER REAL ANALYSIS MODULES
+    if FLOW_ENABLED and not CURRENT_CONTEXT.get("flow_lock", False) and title not in [
+        "REMOTE INTELLIGENCE",
+        "HOST DISCOVERY"
+    ]:
+        console.print(
+            Panel.fit(
+                """
+    [bold cyan]NEXT ACTION[/bold cyan]
 
-    # ======================================================
-    # FLOW CONTROL
-    # ======================================================
-    try:
-        action = next_flow()
-    except Exception:
-        return
+    1. Continue investigation
+    2. Generate report
+    """,
+                border_style="cyan",
+                title="SOC OPTIONS"
+            )
+        )
 
-    # ======================================================
-    # 1. CONTINUE INVESTIGATION
-    # ======================================================
-    if action == "1":
-        CURRENT_CONTEXT["last_action"] = "investigation_mode"
-        investigation_mode()
-        return
+        action = Prompt.ask(
+            "Choose next step",
+            choices=["1", "2"]
+        )
+        # LOCK FLOW to prevent re-entry bugs
+        CURRENT_CONTEXT["flow_lock"] = True
 
-    # ======================================================
-    # 2. RELATED MODULE
-    # ======================================================
-    elif action == "2":
-        if "related_module_selector" not in globals():
-            console.print("[red]Related module selector not defined[/red]")
+        # ==============================
+        # 1. INVESTIGATION MODE
+        # ==============================
+        if action == "1":
+            CURRENT_CONTEXT["last_action"] = "investigation_mode"
+            CURRENT_CONTEXT["flow_lock"] = False  # allow reuse later
+            investigation_mode()
             return
 
-        module = related_module_selector()
-        CURRENT_CONTEXT["last_action"] = f"related_module_{module}"
+        # ==============================
+        # 2. REPORT GENERATION (FIXED)
+        # ==============================
+        elif action == "2":
+            from ai.report_generator import save_report
 
-        if module == "1":
-            threat_engine()
-        elif module == "2":
-            render_output("CVE SCANNER", scan_packages())
-        elif module == "3":
-            forensics_suite()
-        elif module == "4":
-            remote_assessment()
-        elif module == "5":
-            analysis_engine()
+            if not scan_session:
+                console.print("[red]No scan data available for report.[/red]")
+                CURRENT_CONTEXT["flow_lock"] = False
+                return
 
-        return
+            final_report = "\n\n".join(
+                f"[{s['title']}]\n{s['data']}"
+                for s in scan_session
+            )
 
-    # ======================================================
-    # 3. GENERATE REPORT
-    # ======================================================
-    elif action == "3":
-        from ai.report_generator import save_report
+            file_path = save_report(final_report)
 
-        file_path = save_report("\n\n".join(
-            [s["data"] for s in scan_session]
-        ))
+            console.print(
+                Panel.fit(
+                    f"[green]REPORT SAVED SUCCESSFULLY[/green]\n{file_path}",
+                    title="REPORT ENGINE",
+                    border_style="green"
+                )
+            )
 
-        console.print(f"[green]REPORT SAVED → {file_path}[/green]")
-        CURRENT_CONTEXT["last_action"] = "report_generated"
-        return
+            CURRENT_CONTEXT["last_action"] = "report_generated"
+            CURRENT_CONTEXT["flow_lock"] = False
+            return
 # ==========================================================
 # MODULE GROUPS
 # ==========================================================
@@ -502,16 +490,22 @@ def remote_assessment():
     ip = Prompt.ask("Enter Target IP / Hostname / URL")
 
     # STEP 1: Initial discovery mode (confirmation prompt inside engine)
+    CURRENT_CONTEXT["flow_lock"] = True
     result = remote_scan(ip, confirm=True)
     render_output("REMOTE INTELLIGENCE", result)
+    CURRENT_CONTEXT["flow_lock"] = False
 
     # STEP 2: Only continue if host is reachable
-    if "REACHABLE" in result or "Proceed" in result or "HOST DISCOVERY" in result:
+    if "REACHABLE" in str(result) or "HOST DISCOVERY" in str(result):
 
-        choice = Prompt.ask(
-            "Run FULL SOC scan?",
-            choices=["yes", "no"],
+        console.print(
+            Panel.fit(
+                "[bold yellow]Proceed to deep analysis?[/bold yellow]\nType YES to continue",
+                border_style="yellow"
+            )
         )
+
+        choice = Prompt.ask("Proceed?", choices=["yes", "no"])
 
         if choice == "yes":
             result = remote_scan(ip, confirm=False)
@@ -519,12 +513,275 @@ def remote_assessment():
 
 
 def incident_toolkit():
-    ip = Prompt.ask("IP to block")
-    render_output("BLOCK IP", block_ip(ip))
+    from datetime import datetime
+    from ai.brain import ask_ai
+    from tools.network_scanner import scan_target
+    from ai.report_generator import save_report
+    import psutil
 
-    pid = Prompt.ask("PID to kill")
-    render_output("KILL PROCESS", kill_process(pid))
+    incident_log = []
 
+    # ======================================================
+    # STEP 1: AUTO DISCOVERY
+    # ======================================================
+    console.print(
+        Panel.fit(
+            """
+[bold red]INCIDENT RESPONSE TOOLKIT - DISCOVERY MODE[/bold red]
+
+Scanning system intelligence layer:
+• Process anomalies
+• Network connections
+• Active sessions
+""",
+            border_style="red",
+            title="SOC IR INITIALIZATION"
+        )
+    )
+
+    # ================= PROCESS ANALYSIS =================
+    processes = []
+    for p in psutil.process_iter(['pid', 'name', 'cpu_percent']):
+        try:
+            cpu = p.info['cpu_percent'] or 0
+            if cpu > 15:   # lower threshold = better SOC sensitivity
+                processes.append({
+                    "pid": p.info['pid'],
+                    "name": p.info['name'],
+                    "cpu": cpu
+                })
+        except:
+            pass
+
+    # ================= NETWORK ANALYSIS =================
+    connections = []
+    for c in psutil.net_connections(kind="inet"):
+        if c.raddr:
+            connections.append({
+                "local": c.laddr.ip if c.laddr else "-",
+                "remote_ip": c.raddr.ip,
+                "remote_port": c.raddr.port,
+                "status": c.status,
+                "pid": c.pid
+            })
+
+    incident_log.append(f"[{datetime.now()}] System discovery completed")
+
+    # ======================================================
+    # STEP 2: ORGANIZED SOC PRESENTATION
+    # ======================================================
+
+    console.print(
+        Panel.fit(
+            "[bold yellow]SUSPICIOUS PROCESS TABLE[/bold yellow]",
+            border_style="yellow"
+        )
+    )
+
+    if processes:
+        for p in processes:
+            console.print(f"[red]PID[/red]: {p['pid']} | [cyan]{p['name']}[/cyan] | CPU: {p['cpu']}%")
+    else:
+        console.print("[green]No high-risk processes detected[/green]")
+
+    console.print(
+        Panel.fit(
+            "[bold cyan]ACTIVE NETWORK CONNECTIONS[/bold cyan]",
+            border_style="cyan"
+        )
+    )
+
+    if connections:
+        for c in connections:
+            console.print(
+                f"[yellow]{c['remote_ip']}[/yellow]:{c['remote_port']} "
+                f"→ PID {c['pid']} | Status: {c['status']}"
+            )
+    else:
+        console.print("[green]No external connections detected[/green]")
+
+    # ======================================================
+    # STEP 3: ACTION SELECTION
+    # ======================================================
+    console.print(
+        Panel.fit(
+            """
+[bold green]RESPONSE OPTIONS[/bold green]
+
+1. Kill Suspicious Process
+2. Block Remote IP
+3. Full AI Investigation (Deep Forensics)
+""",
+            border_style="green"
+        )
+    )
+
+    choice = Prompt.ask("Select Action", choices=["1", "2", "3"])
+
+    scan_result = {}
+
+    # ======================================================
+    # 1. KILL PROCESS
+    # ======================================================
+    if choice == "1":
+        if not processes:
+            console.print("[red]No suspicious processes found[/red]")
+            return
+
+        for i, p in enumerate(processes):
+            console.print(f"{i}. PID {p['pid']} | {p['name']} | CPU {p['cpu']}%")
+
+        sel = int(Prompt.ask("Select process index"))
+        target = processes[sel]
+
+        render_output("PROCESS TERMINATION", kill_process(target["pid"]))
+
+        incident_log.append(f"Killed process {target['pid']}")
+        scan_result = target
+
+    # ======================================================
+    # 2. BLOCK IP
+    # ======================================================
+    elif choice == "2":
+        if not connections:
+            console.print("[red]No suspicious connections found[/red]")
+            return
+
+        for i, c in enumerate(connections):
+            console.print(f"{i}. {c['remote_ip']}:{c['remote_port']} (PID {c['pid']})")
+
+        sel = int(Prompt.ask("Select connection index"))
+        target = connections[sel]
+
+        render_output("NETWORK CONTAINMENT", block_ip(target["remote_ip"]))
+
+        incident_log.append(f"Blocked IP {target['remote_ip']}")
+        scan_result = target
+
+    # ======================================================
+    # 3. FULL AI INVESTIGATION (UPGRADED)
+    # ======================================================
+    elif choice == "3":
+        scan_result = {
+            "processes": processes,
+            "connections": connections
+        }
+
+        render_output("FORENSIC SNAPSHOT", scan_result)
+
+        incident_log.append("Full AI investigation initiated")
+
+    # ======================================================
+    # STEP 4: DEEP AI SOC ANALYSIS (UPGRADED)
+    # ======================================================
+    ai_prompt = f"""
+You are a SENIOR SOC INCIDENT RESPONSE ANALYST working in a Tier-1 Security Operations Center.
+
+You are analyzing LIVE system telemetry.
+
+========================
+SYSTEM DATA
+========================
+
+SUSPICIOUS PROCESSES:
+{processes}
+
+ACTIVE NETWORK CONNECTIONS:
+{connections}
+
+INCIDENT ACTIONS TAKEN:
+{incident_log}
+
+========================
+ANALYSIS REQUIREMENTS
+========================
+
+Provide a structured SOC investigation report:
+
+1. EXECUTIVE SUMMARY
+- Is the system SAFE / SUSPECT / COMPROMISED?
+
+2. THREAT ANALYSIS
+- Identify malicious processes (if any)
+- Identify suspicious network activity
+- Explain behavior patterns
+
+3. ATTACK CLASSIFICATION (if applicable)
+- MITRE ATT&CK mapping (if possible)
+- Type: malware / persistence / C2 / lateral movement / exfiltration
+
+4. RISK SCORING
+- Low / Medium / High / Critical
+- Justification required
+
+5. INDICATORS OF COMPROMISE (IOCs)
+- IPs
+- Processes
+- Ports
+- Behaviors
+
+6. DEFENSIVE ACTION PLAN
+- Immediate containment steps
+- Hardening recommendations
+- Monitoring suggestions
+
+7. FINAL VERDICT
+- CLEAN / SUSPICIOUS / COMPROMISED
+"""
+
+    ai_analysis = ask_ai(ai_prompt)
+
+    render_output("AI INCIDENT ANALYSIS", ai_analysis)
+
+    incident_log.append("AI analysis completed")
+
+    # ======================================================
+    # STEP 5: FINAL STRUCTURED REPORT
+    # ======================================================
+    full_report = f"""
+=============================
+KALI SOC INCIDENT REPORT
+=============================
+
+[DATE]
+{datetime.now()}
+
+[DISCOVERY SUMMARY]
+Processes Found: {len(processes)}
+Connections Found: {len(connections)}
+
+[INCIDENT LOG]
+{incident_log}
+
+[RAW DATA]
+Processes:
+{processes}
+
+Connections:
+{connections}
+
+=============================
+AI FORENSIC ANALYSIS
+=============================
+{ai_analysis}
+"""
+
+    file_path = save_report(full_report)
+
+    console.print(
+        Panel.fit(
+            f"""
+[bold green]INCIDENT REPORT GENERATED[/bold green]
+
+File: {file_path}
+
+Status: ANALYSIS COMPLETE
+""",
+            border_style="green"
+        )
+    )
+
+    CURRENT_CONTEXT["last_action"] = "incident_response"
 
 def forensics_suite():
 
@@ -740,37 +997,6 @@ def menu():
     table.add_row("EXIT", "Shutdown", "Exit system safely")
 
     console.print(table)
-
-def workflow_engine():
-    action = next_flow()
-
-    if action == "1":
-        investigation_mode()
-        return
-
-    elif action == "2":
-        module = related_module_selector()
-
-        if module == "1":
-            analysis_engine()
-        elif module == "2":
-            threat_engine()
-        elif module == "3":
-            incident_toolkit()
-        elif module == "4":
-            forensics_suite()
-        elif module == "5":
-            remote_assessment()
-
-    elif action == "3":
-        from ai.report_generator import save_report
-
-        file_path = save_report("\n\n".join(
-            [s["data"] for s in scan_session]
-        ))
-
-        console.print(f"[green]REPORT SAVED → {file_path}[/green]")
-# ==========================================================
 # ==========================================================
 # MAIN LOOP (PERSISTENT SOC MODE)
 # ==========================================================

@@ -375,26 +375,47 @@ def ask_ai(prompt, mode="general"):
     )
     loader_thread.start()
 
+    # ======================================================
+    # 🧠 TOKEN SAFETY LAYER (CRITICAL FIX)
+    # ======================================================
+    def trim(text, limit=3500):
+        text = str(text)
+        if len(text) > limit:
+            return text[:limit] + "\n\n[TRUNCATED - INPUT TOO LARGE]"
+        return text
+
     try:
+        # CLEAN INPUT
+        safe_prompt = trim(prompt)
+
         full_prompt = system_prompt + """
 
 CRITICAL RULE:
 You are NOT allowed to provide tutorials, installation steps, or explanations of tools.
 You are ONLY allowed to analyze and report findings.
 
-""" + "\n\n" + prompt
+IMPORTANT:
+Keep response concise, structured, SOC-focused.
 
+""" + "\n\n" + safe_prompt
+
+        # ALSO PROTECT SYSTEM PROMPT SIZE
+        full_prompt = trim(full_prompt, 5000)
+
+        # ===============================
+        # BACKEND ROUTING
+        # ===============================
         if AI_MODE.lower() == "ollama":
             result = ask_ollama(full_prompt)
 
         elif AI_MODE.lower() == "groq":
-            result = ask_groq(system_prompt, prompt)
+            result = ask_groq(system_prompt, safe_prompt)
 
         else:
             try:
                 result = ask_ollama(full_prompt)
             except:
-                result = ask_groq(system_prompt, prompt)
+                result = ask_groq(system_prompt, safe_prompt)
 
     except Exception as e:
         result = f"AI Engine Error:\n{e}"
