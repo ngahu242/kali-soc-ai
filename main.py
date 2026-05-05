@@ -27,7 +27,7 @@ from ai.mitm_detector import detect_mitm
 from ai.cve_scanner import scan_packages
 
 # ================= RESPONSE =================
-from ai.incident_response import block_ip, kill_process
+from ai.incident_response import incident_toolkit
 
 # ================= MEMORY =================
 from ai.memory import remember, recall
@@ -549,151 +549,6 @@ def remote_assessment():
 
 
 
-def incident_toolkit():
-    from datetime import datetime
-    from ai.brain import ask_ai
-    from tools.network_scanner import scan_target
-    from ai.report_generator import save_report
-    import psutil
-
-    incident_log = []
-
-    # ======================================================
-    # STEP 1: AUTO DISCOVERY
-    # ======================================================
-    console.print(
-        Panel.fit(
-            """
-[bold red]INCIDENT RESPONSE TOOLKIT - DISCOVERY MODE[/bold red]
-
-Scanning system intelligence layer:
-• Process anomalies
-• Network connections
-• Active sessions
-""",
-            border_style="red",
-            title="SOC IR INITIALIZATION"
-        )
-    )
-
-    # ================= PROCESS ANALYSIS =================
-    processes = []
-    for p in psutil.process_iter(['pid', 'name', 'cpu_percent']):
-        try:
-            cpu = p.info['cpu_percent'] or 0
-            if cpu > 15:   # lower threshold = better SOC sensitivity
-                processes.append({
-                    "pid": p.info['pid'],
-                    "name": p.info['name'],
-                    "cpu": cpu
-                })
-        except:
-            pass
-
-    # ================= NETWORK ANALYSIS =================
-    connections = []
-    for c in psutil.net_connections(kind="inet"):
-        if c.raddr:
-            connections.append({
-                "local": c.laddr.ip if c.laddr else "-",
-                "remote_ip": c.raddr.ip,
-                "remote_port": c.raddr.port,
-                "status": c.status,
-                "pid": c.pid
-            })
-
-    incident_log.append(f"[{datetime.now()}] System discovery completed")
-
-    # ======================================================
-    # STEP 2: ORGANIZED SOC PRESENTATION
-    # ======================================================
-
-    console.print(
-        Panel.fit(
-            "[bold yellow]SUSPICIOUS PROCESS TABLE[/bold yellow]",
-            border_style="yellow"
-        )
-    )
-
-    if processes:
-        for p in processes:
-            console.print(f"[red]PID[/red]: {p['pid']} | [cyan]{p['name']}[/cyan] | CPU: {p['cpu']}%")
-    else:
-        console.print("[green]No high-risk processes detected[/green]")
-
-    console.print(
-        Panel.fit(
-            "[bold cyan]ACTIVE NETWORK CONNECTIONS[/bold cyan]",
-            border_style="cyan"
-        )
-    )
-
-    if connections:
-        for c in connections:
-            console.print(
-                f"[yellow]{c['remote_ip']}[/yellow]:{c['remote_port']} "
-                f"→ PID {c['pid']} | Status: {c['status']}"
-            )
-    else:
-        console.print("[green]No external connections detected[/green]")
-
-    # ======================================================
-    # STEP 3: ACTION SELECTION
-    # ======================================================
-    console.print(
-        Panel.fit(
-            """
-[bold green]RESPONSE OPTIONS[/bold green]
-
-1. Kill Suspicious Process
-2. Block Remote IP
-3. Full AI Investigation (Deep Forensics)
-""",
-            border_style="green"
-        )
-    )
-
-    choice = Prompt.ask("Select Action", choices=["1", "2", "3"])
-
-    scan_result = {}
-
-    # ======================================================
-    # 1. KILL PROCESS
-    # ======================================================
-    if choice == "1":
-        if not processes:
-            console.print("[red]No suspicious processes found[/red]")
-            return
-
-        for i, p in enumerate(processes):
-            console.print(f"{i}. PID {p['pid']} | {p['name']} | CPU {p['cpu']}%")
-
-        sel = int(Prompt.ask("Select process index"))
-        target = processes[sel]
-
-        render_output("PROCESS TERMINATION", kill_process(target["pid"]))
-
-        incident_log.append(f"Killed process {target['pid']}")
-        scan_result = target
-
-    # ======================================================
-    # 2. BLOCK IP
-    # ======================================================
-    elif choice == "2":
-        if not connections:
-            console.print("[red]No suspicious connections found[/red]")
-            return
-
-        for i, c in enumerate(connections):
-            console.print(f"{i}. {c['remote_ip']}:{c['remote_port']} (PID {c['pid']})")
-
-        sel = int(Prompt.ask("Select connection index"))
-        target = connections[sel]
-
-        render_output("NETWORK CONTAINMENT", block_ip(target["remote_ip"]))
-
-        incident_log.append(f"Blocked IP {target['remote_ip']}")
-        scan_result = target
 
     # ======================================================
     # 3. FULL AI INVESTIGATION (UPGRADED)
@@ -819,6 +674,11 @@ Status: ANALYSIS COMPLETE
     )
 
     CURRENT_CONTEXT["last_action"] = "incident_response"
+
+def incident_toolkit():
+    from ai.incident_response import incident_toolkit as ir
+    ir(render_output)
+
 
 def forensics_suite():
 

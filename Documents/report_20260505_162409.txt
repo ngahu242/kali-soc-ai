@@ -1,0 +1,44 @@
+[2026-05-05 16:20:56.171852] Discovery completed
+Auto-blocked 3.164.195.123
+Auto-blocked 127.0.0.1
+Auto-blocked 127.0.0.1
+AI analysis completed
+
+**Incident Summary**
+
+On [Date], an unknown threat actor exploited a vulnerability in our Apache Struts 2 application, leading to the execution of malicious code. The attack was detected by our IDS system and automatically contained via our security orchestration platform.
+
+**Attack Type**
+
+Remote Code Execution (RCE) attack leveraging a known vulnerability in Apache Struts 2 (CVE-2017-5638)
+
+**Risk Level**
+
+High
+
+**Affected Components**
+
+* Apache Struts 2 application
+* Web server logs
+* Possible data exfiltration to an unknown C2 server
+
+**Recommended Actions**
+
+1. Immediate Actions: None required, as automatic containment was executed.
+2. Containment:
+	* Review IDS logs for any further suspicious activity
+	* Verify containment strategy effectiveness and adjust if necessary
+3. Eradication:
+	* Conduct thorough vulnerability assessment of Apache Struts 2 application
+	* Apply patches or updates to mitigate the exploit
+4. Recovery:
+	* Restore normal operations once containment is verified
+	* Conduct post-incident analysis to identify root cause and improve incident response processes
+5. Lessons Learned:
+
+	+ Review security policies for vulnerable software updates
+	+ Enhance IDS rules to detect similar attacks
+
+**Containment Strategy**
+
+The automatic containment executed by our security orchestration platform successfully isolated the affected system, preventing further propagation of the malicious code.
