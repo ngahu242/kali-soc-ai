@@ -477,7 +477,6 @@ def analysis_engine():
     render_output("SYSTEM AUDIT", audit())
     render_output("SYSTEM HEALTH", health())
 
-
 def threat_engine():
     render_output("THREAT OVERVIEW", threats())
     render_output("SIEM CORRELATION", correlate_logs())
@@ -485,6 +484,42 @@ def threat_engine():
     render_output("REVERSE SHELL DETECTION", detect_reverse_shell())
     render_output("MITM DETECTION", detect_mitm())
     render_output("CVE SCANNER", scan_packages())
+
+# ==========================================================
+# AI CHAT MODE
+# ==========================================================
+def ai_chat_mode():
+    console.print(
+        Panel.fit(
+            "[bold cyan]AI CHAT MODE ACTIVE[/bold cyan]\nCTRL + C to exit safely",
+            border_style="cyan"
+        )
+    )
+
+    while True:
+        try:
+            q = Prompt.ask("[green]You[/green]")
+            response = ask_ai(q)
+
+            console.print(Panel(response, title="AI RESPONSE", border_style="cyan"))
+
+            # ================= POST RESPONSE OPTIONS =================
+            action = Prompt.ask(
+                "\n[bold yellow]Next Action[/bold yellow]",
+                choices=["continue", "menu", "clear"],
+            )
+
+            if action == "menu":
+                return
+
+            elif action == "clear":
+                clear()
+                banner()
+                menu ()
+
+        except KeyboardInterrupt:
+            console.print("\n[yellow]Exiting AI Mode → Dashboard[/yellow]")
+            return
 
 def remote_assessment():
     ip = Prompt.ask("Enter Target IP / Hostname / URL")
@@ -510,6 +545,8 @@ def remote_assessment():
         if choice == "yes":
             result = remote_scan(ip, confirm=False)
             render_output("FULL SOC ANALYSIS", result)
+
+
 
 
 def incident_toolkit():
